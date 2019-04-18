@@ -1,0 +1,133 @@
+﻿
+@model procedure_kullanımı.ViewModels.Home.HomePageViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "homepage";
+}
+
+<h2>homepage</h2>
+
+
+
+@*@{
+        procedure_kullanımı.Models.Managers.my_procedure_class.number_of_elements = 1;
+    }*@
+
+@*@Model.my_procedure_class_primitive_object.Count*@
+
+
+
+@if (ViewBag.control)
+{
+
+
+    <ul class="list-group">
+        <li class="list-group-item active"><h4 style="color:burlywood">Kisiler</h4></li>
+
+        @foreach (var item in Model.kisiler_primitive_object)
+        {
+            <li class="list-group-item">
+
+                <span class="glyphicon glyphicon-user burylywood"></span> @(item.ad + " " + item.soyad) (<i>yasi: @item.yas</i>)
+
+            </li>
+        }
+
+    </ul>
+    <div class="alert alert-success" role="alert">@(Model.kisiler_primitive_object.Count + "  adet sonuc bulunmustur")</div>
+    <ul class="list-group">
+        <li class="list-group-item active"><h4 style="color:burlywood">Adresler</h4></li>
+
+        @foreach (var item in Model.adresler_primitive_object)
+        {
+            <li class="list-group-item">
+
+                <span class="glyphicon glyphicon-user burylywood"></span> @(item.adres_tanim) (<i>yasi: @(item.kisi.ad + " " + item.kisi.soyad)</i>)
+
+            </li>
+        }
+
+    </ul>
+
+    <div class="alert alert-success" role="alert">@(Model.adresler_primitive_object.Count + "  adet sonuc bulunmustur")</div>
+}
+else
+{
+    if (Model.my_procedure_class_primitive_object.Count != 0)
+    {
+        <ul class="list-group">
+            <li class="list-group-item active"><h4 style="color:deeppink">Kisiler</h4></li>
+
+            @foreach (var item in Model.my_procedure_class_primitive_object)
+            {
+                <li class="list-group-item">
+
+                    <span class="glyphicon glyphicon-user burylywood"></span> @(item.ad + " " + item.soyad) (<i>yasi: @item.yas</i>)
+
+                </li>
+
+
+            }
+
+        </ul>
+        <div class="alert alert-success" role="alert">@(Model.my_procedure_class_primitive_object.Count + "  adet sonuc bulunmustur")</div>
+        <ul class="list-group">
+            <li class="list-group-item active"><h4 style="color:deeppink">Adresler</h4></li>
+
+            @foreach (var item in Model.my_procedure_class_primitive_object)
+            {
+                <li class="list-group-item">
+
+                    <span class="glyphicon glyphicon-user burylywood"></span> @(item.adres_tanim) (<i>adi ve soyadi: @(item.ad + " " + item.soyad)</i>)
+
+                </li>
+
+
+            }
+
+        </ul>
+        <div class="alert alert-success" role="alert">@(Model.my_procedure_class_primitive_object.Count + "  adet sonuc bulunmustur")</div>
+
+
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">Aradiğiniz aralıklarda ilgili kayıt bulunamamistir.</div>
+    }
+
+
+
+
+
+}
+
+
+
+
+
+@using (Html.BeginForm())
+{
+
+    <div class="input-group">
+        <span class="input-group-addon" id="txt_alt">Yas</span>
+        @Html.TextBoxFor(x => x.alt_sinir, new { @class = "form-control", placeholder = "Age", aria_describedby = "txt_alt", type = "number", required = "required", min = "1", max = "10" })
+
+    </div>
+    <div class="input-group">
+        <span class="input-group-addon" id="txt_ust">Yas</span>
+        @Html.TextBoxFor(x => x.ust_sinir, new { @class = "form-control", placeholder = "Age", aria_describedby = "txt_ust", type = "number", required = "required", min = "11", max = "20" })
+
+    </div>
+    <br />
+
+    <div class="input-group">
+        <input type="submit" value="kaydet" class=" btn btn-success" />
+    </div>
+}
+
+
+
+@*NOT: Neden kisiler birden fazla geliyor diye sorarsan bir kisinin birden fazla adresi olabilir o yuzden sql sorgusunu alel acele yazdıgımdan 
+    dolayı tabiki her adrese gelen (inner joinden dolayı) iki ayrı procedure ile kolaylıkla bu sorunu çözebilirsin*@
